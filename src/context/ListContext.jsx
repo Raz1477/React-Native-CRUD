@@ -1,16 +1,39 @@
-import React, { useState } from 'react';
+import React, { useReducer } from 'react';
 
 const ListContext = React.createContext();
 
+const listReducer = (state, action) => {
+	switch (action.type) {
+		case 'delete_listToDo':
+			return state.filter((listToDos) => listToDos.id !== action.payload);
+		case 'add_listToDo':
+			return [
+				...state,
+				{
+					id: Math.floor(Math.random() * 999999999999999),
+					title: `To Dos #${state.length + 1}`,
+				},
+			];
+
+		default:
+			return state;
+	}
+};
+
 export const ListProvider = ({ children }) => {
-	const [listToDos, setListToDos] = useState([]);
+	const [listToDos, dispatch] = useReducer(listReducer, []);
+
 	const addListToDos = () => {
-		setListToDos([...listToDos, { title: `To Dos #${listToDos.length + 1}` }]);
+		dispatch({ type: 'add_listToDo' });
+	};
+
+	const deleteListToDos = (id) => {
+		dispatch({ type: 'delete_listToDo', payload: id });
 	};
 
 	return (
 		<ListContext.Provider
-			value={{ data: listToDos, addListToDos: addListToDos }}
+			value={{ data: listToDos, addListToDos, deleteListToDos }}
 		>
 			{children}
 		</ListContext.Provider>
