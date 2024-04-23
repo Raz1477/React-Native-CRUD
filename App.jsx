@@ -5,6 +5,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import IndexScreen from './src/screens/IndexScreen';
 import ShowScreen from './src/screens/ShowScreen';
 import { ListProvider } from './src/context/ListContext';
+import CreateScreen from './src/screens/CreateScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -14,6 +15,7 @@ function App() {
 			<Stack.Navigator>
 				<Stack.Screen name='List' component={IndexScreen} />
 				<Stack.Screen name='Show' component={ShowScreen} />
+				<Stack.Screen name='Create' component={CreateScreen} />
 			</Stack.Navigator>
 		</NavigationContainer>
 	);

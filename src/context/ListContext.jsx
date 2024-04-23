@@ -10,8 +10,9 @@ const listReducer = (state, action) => {
 			return [
 				...state,
 				{
-					id: Math.floor(Math.random() * 999999999999999),
-					title: `To Dos #${state.length + 1}`,
+					id: new Date().getTime(),
+					title: action.payload.title,
+					content: action.payload.content,
 				},
 			];
 
@@ -23,8 +24,12 @@ const listReducer = (state, action) => {
 export const ListProvider = ({ children }) => {
 	const [listToDos, dispatch] = useReducer(listReducer, []);
 
-	const addListToDos = () => {
-		dispatch({ type: 'add_listToDo' });
+	const addListToDos = (title, content, callback) => {
+		dispatch({
+			type: 'add_listToDo',
+			payload: { title: title, content: content },
+		});
+		callback();
 	};
 
 	const deleteListToDos = (id) => {
