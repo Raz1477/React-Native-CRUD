@@ -1,4 +1,4 @@
-import React, { useContext, useState} from 'react';
+import React, {useContext, useState} from 'react';
 import ListContext from '../context/ListContext';
 import {
 	View,
@@ -7,12 +7,16 @@ import {
 	FlatList,
 	Button,
 	TouchableOpacity,
-    TextInput,
+	TextInput,
 } from 'react-native';
-const CreateScreen = ({ navigation }) => {
-	const [title, setTitle] = useState('');
-	const [content, setContent] = useState('');
-	const { addListToDos } = useContext(ListContext);
+
+const EditScreen = ({ navigation, route }) => {
+	const { id } = route.params;
+
+	const { data, editListToDos } = useContext(ListContext);
+	const listItem = data.find((listItem) => listItem.id === id);
+	const [title, setTitle] = useState(listItem.title);
+	const [content, setContent] = useState(listItem.content);
 
 	return (
 		<View>
@@ -29,9 +33,9 @@ const CreateScreen = ({ navigation }) => {
 				onChangeText={(text) => setContent(text)}
 			/>
 			<Button
-				title='Add List item'
+				title='Submit Changes'
 				onPress={() => {
-					addListToDos(title, content, () => {
+					editListToDos(id, title, content, () => {
 						navigation.navigate('List');
 					});
 				}}
@@ -41,7 +45,7 @@ const CreateScreen = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-	input: {
+    input: {
 		fontSize: 18,
 		borderWidth: 1,
 		borderColor: 'black',
@@ -57,5 +61,4 @@ const styles = StyleSheet.create({
 		paddingTop: 5,
 	},
 });
-
-export default CreateScreen;
+export default EditScreen;

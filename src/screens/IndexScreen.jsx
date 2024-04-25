@@ -40,7 +40,7 @@ const IndexScreen = ({ navigation }) => {
 						>
 							<View style={styles.row}>
 								<Text style={styles.title}>
-									{item.title}- {item.id}
+									{item.title} - {item.content}
 								</Text>
 								<TouchableOpacity onPress={() => deleteListToDos(item.id)}>
 									<Feather style={styles.icon} name='trash' />
